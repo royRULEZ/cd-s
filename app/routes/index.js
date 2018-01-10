@@ -1,6 +1,6 @@
-const nameRoutes = require('./name_routes');
+const allRoutes = require('./all_routes');
 
 module.exports = function(app, db){
-    nameRoutes(app, db);
+    allRoutes(app, db);
     
 };
