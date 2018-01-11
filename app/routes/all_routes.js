@@ -4,7 +4,7 @@ var ObjectID = require('mongodb').ObjectID;
 module.exports = function(app, db){
         
     app.get('/table-data', (req, res) => { 
-        db.collection('table').find().limit(100).toArray(function(err, result){
+        db.collection('main').find().limit(100).toArray(function(err, result){
            if(err){
                res.send({ 'error': 'An error has occured'});
            }else{
@@ -13,6 +13,16 @@ module.exports = function(app, db){
         });             
     });
     
+    
+    app.get('/watch-list', (req, res) => { 
+        db.collection('main').find().sort( { day: -1 } ).limit(5).toArray(function(err, result){
+           if(err){
+               res.send({ 'error': 'An error has occured'});
+           }else{
+               res.send(result);
+           }
+        });             
+    });
     
     
     /*
