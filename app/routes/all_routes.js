@@ -1,5 +1,5 @@
-var ObjectID = require('mongodb').ObjectID;
-
+var ObjectID        = require('mongodb').ObjectID;
+const googleTrends  = require('google-trends-api');
 
 module.exports = function(app, db){
         
@@ -13,7 +13,6 @@ module.exports = function(app, db){
         });             
     });
     
-    
     app.get('/watch-list', (req, res) => { 
         db.collection('main').find().sort( { day: -1 } ).limit(5).toArray(function(err, result){
            if(err){
@@ -22,6 +21,17 @@ module.exports = function(app, db){
                res.send(result);
            }
         });             
+    });
+
+    app.get('/google-trends/:term', (req, result) => { 
+        const term_ = req.params.term;
+        googleTrends.interestOverTime({keyword: term_})
+        .then((res) => {
+            result.send(res);
+        })
+        .catch((err) => {
+            result.send({ 'error': 'An error has occured'});
+        })             
     });
     
     
