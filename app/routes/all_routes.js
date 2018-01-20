@@ -25,7 +25,7 @@ module.exports = function(app, db){
 
     app.get('/google-trends/:term', (req, result) => { 
         const term_ = req.params.term;
-        googleTrends.interestOverTime({keyword: term_})
+        googleTrends.interestByRegion({keyword: term_, resolution: "CITY"})
         .then((res) => {
             result.send(res);
         })
